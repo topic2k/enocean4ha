@@ -326,6 +326,16 @@ All profiles (should) correspond to the official [EEP](http://www.enocean-allian
 |        |                                                  |        |1 - on                                                                |
 
 
+##### RORG 0xA5 - FUNC 0x07 - TYPE 0x03 - Occupancy with Supply voltage monitor and 10-bit illumination measurement
+
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|SVC     |Supply voltage (OPTIONAL)                         |value   |0.0-250.0 ↔ 0.0-5.0 V                                                 |
+|ILL     |Illumination (linear)                             |value   |0.0-1000.0 ↔ 0.0-1000.0 lx                                            |
+|PIR     |PIR Status                                        |enum    |0 - Uncertain of occupancy status                                     |
+|        |                                                  |        |1 - Motion detected                                                   |
+
+
 
 ##### RORG 0xA5 - FUNC 0x08 - TYPE 0x01 - Range 0lx to 510lx, 0°C to +51°C and Occupancy Button
 
@@ -495,6 +505,73 @@ All profiles (should) correspond to the official [EEP](http://www.enocean-allian
 
 
 
+##### RORG 0xA5 - FUNC 0x13 - TYPE 0x01 - Weather Station
+
+###### command: 1
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|DWS     |Dawn sensor                                       |value   |0.0-255.0 ↔ 0.0-999.0 lx                                              |
+|TMP     |Outdoor Temp                                      |value   |0.0-255.0 ↔ -40.0-80.0 °C                                             |
+|WND     |Wind speed                                        |value   |0.0-255.0 ↔ 0.0-70.0 m/s                                              |
+|D/N     |Day / Night                                       |enum    |0 - day                                                               |
+|        |                                                  |        |1 - night                                                             |
+|RAN     |Rain Indication                                   |enum    |0 - no rain                                                           |
+|        |                                                  |        |1 - rain                                                              |
+
+###### command: 2
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|SNW     |Sun - West                                        |value   |0.0-255.0 ↔ 0.0-150.0 klx                                             |
+|SNS     |Sun - South                                       |value   |0.0-255.0 ↔ 0.0-150.0 klx                                             |
+|SNE     |Sun - East                                        |value   |0.0-255.0 ↔ 0.0-150.0 klx                                             |
+|HEM     |Hemisphere                                        |enum    |0 - North                                                             |
+|        |                                                  |        |1 - South                                                             |
+
+###### command: 3
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|DY      |Day                                               |value   |1.0-31.0 ↔ 1.0-31.0                                                   |
+|MTH     |Month                                             |value   |1.0-12.0 ↔ 1.0-12.0                                                   |
+|YR      |Year                                              |value   |0.0-99.0 ↔ 2000.0-2099.0                                              |
+|SRC     |Source                                            |enum    |0 - Real Time Clock                                                   |
+|        |                                                  |        |1 - GPS or equivalent                                                 |
+
+###### command: 4
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|WDY     |Weekday                                           |enum    |1 - Monday                                                            |
+|        |                                                  |        |2 - Tuesday                                                           |
+|        |                                                  |        |3 - Wednesday                                                         |
+|        |                                                  |        |4 - Thursday                                                          |
+|        |                                                  |        |5 - Friday                                                            |
+|        |                                                  |        |6 - Saturday                                                          |
+|        |                                                  |        |7 - Sunday                                                            |
+|HR      |Hour                                              |value   |0.0-23.0 ↔ 0.0-23.0                                                   |
+|MIN     |Minute                                            |value   |0.0-59.0 ↔ 0.0-59.0                                                   |
+|SEC     |Second                                            |value   |0.0-59.0 ↔ 0.0-59.0                                                   |
+|TMF     |Time Format                                       |enum    |0 - 24 Hours                                                          |
+|        |                                                  |        |1 - 12 Hours                                                          |
+|A/PM    |AM/PM                                             |enum    |0 - AM                                                                |
+|        |                                                  |        |1 - PM                                                                |
+|SRC     |Source                                            |enum    |0 - Real Time Clock                                                   |
+|        |                                                  |        |1 - GPS or equivalent                                                 |
+
+###### command: 5
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|ELV     |Elevation                                         |value   |0.0-180.0 ↔ -90.0-90.0 °                                              |
+|AZM     |Azimut                                            |value   |0.0-359.0 ↔ 0.0-359.0 °                                               |
+
+###### command: 6
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|LAT(MSB)|Latitude(MSB)                                     |value   |0.0-15.0 ↔ 0.0-15.0                                                   |
+|LOT(MSB)|Longitude(MSB)                                    |value   |0.0-15.0 ↔ 0.0-15.0                                                   |
+|LAT(LSB)|Latitude(LSB)                                     |value   |0.0-255.0 ↔ 0.0-255.0                                                 |
+|LOT(LSB)|Longitude(LSB)                                    |value   |0.0-255.0 ↔ 0.0-255.0                                                 |
+
+
+
 ##### RORG 0xA5 - FUNC 0x14 - TYPE 0x01 - Single Input Contact (Window/Door), Supply voltage monitor
 
 |shortcut|description                                       |type    |values                                                                |
@@ -660,6 +737,50 @@ All profiles (should) correspond to the official [EEP](http://www.enocean-allian
 |        |                                                  |        |127 - output value not valid / not set                                |
 
 
+##### RORG 0xD2 - FUNC 0x01 - TYPE 0x0F - Electronic switch with Local Control
+
+###### command: 4
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|PF      |Power Failure                                     |enum    |0 - Power Failure Detection disabled/not supported                    |
+|        |                                                  |        |1 - Power Failure Detection enabled                                   |
+|PFD     |Power Failure Detection                           |enum    |0 - Power Failure Detection not detected/not supported/disabled       |
+|        |                                                  |        |1 - Power Failure Detection Detected                                  |
+|CMD     |Command indentifier                               |enum    |0-13 - Command ID {value}                                             |
+|OC      |Over current switch off                           |enum    |0 - Over current switch off: ready / not supported                    |
+|        |                                                  |        |1 - Over current switch off: executed                                 |
+|EL      |Error level                                       |enum    |0 - Error level 0: hardware OK                                        |
+|        |                                                  |        |1 - Error level 1: hardware warning                                   |
+|        |                                                  |        |2 - Error level 2: hardware failure                                   |
+|        |                                                  |        |3 - Error level not supported                                         |
+|IO      |I/O channel                                       |enum    |0-29 - Output channel {value} (to load)                               |
+|        |                                                  |        |30 - Not applicable, do not use                                       |
+|        |                                                  |        |31 - Input channel (from mains supply)                                |
+|LC      |Local control                                     |enum    |0 - Local control disabled / not supported                            |
+|        |                                                  |        |1 - Local control enabled                                             |
+|OV      |Output value                                      |enum    |0 - Output value 0% or OFF                                            |
+|        |                                                  |        |1-100 - Output value {value}% or ON                                   |
+|        |                                                  |        |101-126 - Not used                                                    |
+|        |                                                  |        |127 - output value not valid / not set                                |
+
+###### command: 1
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|CMD     |Command indentifier                               |enum    |0-13 - Command ID {value}                                             |
+|DV      |Dim value                                         |enum    |0 - Switch to new output value                                        |
+|        |                                                  |        |1 - Dim to new output level - dim timer 1                             |
+|        |                                                  |        |2 - Dim to new output level - dim timer 2                             |
+|        |                                                  |        |3 - Dim to new output level - dim timer 3                             |
+|        |                                                  |        |4 - Stop dimming                                                      |
+|IO      |I/O channel                                       |enum    |0-29 - Output channel {value} (to load)                               |
+|        |                                                  |        |30 - All output channels supported by the device                      |
+|        |                                                  |        |31 - Input channel (from mains supply)                                |
+|OV      |Output value                                      |enum    |0 - Output value 0% or OFF                                            |
+|        |                                                  |        |1-100 - Output value {value}% or ON                                   |
+|        |                                                  |        |101-126 - Not used                                                    |
+|        |                                                  |        |127 - output value not valid / not set                                |
+
+
 
 ##### RORG 0xD2 - FUNC 0x05 - TYPE 0x00 - Type 0x00
 
@@ -718,6 +839,24 @@ All profiles (should) correspond to the official [EEP](http://www.enocean-allian
 |        |                                                  |        |7 - Deblockage                                                        |
 |CHN     |Channel                                           |enum    |0 - Channel 1                                                         |
 |CMD     |Command Id                                        |enum    |0-5 - Command ID {value}                                              |
+
+
+
+##### RORG 0xD2 - FUNC 0x14 - TYPE 0x41 - Indoor -Temperature, Humidity XYZ Acceleration, Illumination Sensor
+
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|TMP     |Temperature 10                                    |value   |0.0-1000.0 ↔ -40.0-60.0 °C                                            |
+|HUM     |Rel. Humidity linear)                             |value   |0.0-200.0 ↔ 0.0-100.0 %                                               |
+|ILL     |Illumination linear)                              |value   |0.0-100000.0 ↔ 0.0-100000.0 lx                                        |
+|ACC     |Acceleration Status                               |enum    |0 - Periodic Update                                                   |
+|        |                                                  |        |1 - Threshold 1 exceeded                                              |
+|        |                                                  |        |2 - Threshold 2 exceeded                                              |
+|ACX     |Absolute Acceleration on X axis                   |value   |0.0-1000.0 ↔ -2.5-2.5 g                                               |
+|ACY     |Absolute Acceleration on Y axis                   |value   |0.0-1000.0 ↔ -2.5-2.5 g                                               |
+|ACZ     |Absolute Acceleration on Z axis                   |value   |0.0-1000.0 ↔ -2.5-2.5 g                                               |
+|CO      |Contact                                           |enum    |0 - Open                                                              |
+|        |                                                  |        |1 - Closed                                                            |
 
 
 
