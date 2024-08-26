@@ -200,12 +200,17 @@ class EEP(object):
         for source in profile.contents:
             if not source.name:
                 continue
-            if source.name == 'value':
+            elif source.name == 'value':
                 output.update(self._get_value(source, bitarray))
-            if source.name == 'enum':
-                output.update(self._get_enum(source, bitarray))
-            if source.name == 'status':
+            elif source.name == 'enum':
+                try:
+                    output.update(self._get_enum(source, bitarray))
+                except (ValueError, TypeError):
+                    pass
+            elif source.name == 'status':
                 output.update(self._get_boolean(source, status))
+            # else:
+            #     pass
         return output.keys(), output
 
     def set_values(self, profile, data, status, properties):
