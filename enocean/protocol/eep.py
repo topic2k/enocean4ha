@@ -20,14 +20,10 @@ class EEP(object):
 
         eep_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'EEP.xml')
         try:
-            if version_info[0] > 2:
-                with open(eep_path, 'r', encoding='UTF-8') as xml_file:
-                    self.soup = BeautifulSoup(xml_file.read(), "html.parser")
-            else:
-                with open(eep_path, 'r') as xml_file:
-                    self.soup = BeautifulSoup(xml_file.read(), "html.parser")
-            self.init_ok = True
+            with open(eep_path, 'r', encoding='UTF-8') as xml_file:
+                self.soup = BeautifulSoup(xml_file.read(), features="lxml-xml")  # ,"html.parser")
             self.__load_xml()
+            self.init_ok = True
         except IOError:
             # Impossible to test with the current structure?
             # To be honest, as the XML is included with the library,
