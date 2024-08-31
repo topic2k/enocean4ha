@@ -9,7 +9,7 @@ try:
 except ImportError:
     import Queue as queue
 from enocean.protocol.packet import Packet, UTETeachInPacket
-from enocean.protocol.constants import PACKET, PARSE_RESULT, RETURN_CODE
+from enocean.protocol.constants import COMMON_COMMAND, PACKET, PARSE_RESULT, RETURN_CODE
 
 
 class Communicator(threading.Thread):
@@ -89,7 +89,7 @@ class Communicator(threading.Thread):
             return self._base_id
 
         # Send COMMON_COMMAND 0x08, CO_RD_IDBASE request to the module
-        self.send(Packet(PACKET.COMMON_COMMAND, data=[0x08]))
+        self.send(Packet(PACKET.COMMON_COMMAND, data=[COMMON_COMMAND.CO_RD_IDBASE]))
         # Loop over 10 times, to make sure we catch the response.
         # Thanks to timeout, shouldn't take more than a second.
         # Unfortunately, all other messages received during this time are ignored.

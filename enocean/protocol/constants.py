@@ -26,6 +26,12 @@ class PACKET(IntEnum):
     COMMAND_2_4 = 0x11
 
 
+# EnOceanSerialProtocol3-1-1.pdf / 33
+class COMMON_COMMAND(IntEnum):
+    CO_RD_VERSION = 0x03
+    CO_RD_IDBASE = 0x08
+
+
 # EnOceanSerialProtocol3.pdf / 18
 class RETURN_CODE(IntEnum):
     OK = 0x00
