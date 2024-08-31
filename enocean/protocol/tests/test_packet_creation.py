@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
-from __future__ import print_function, unicode_literals, division, absolute_import
+
 from nose.tools import raises
 
-from enocean.protocol.packet import Packet, RadioPacket
-from enocean.protocol.constants import PACKET, RORG
 from enocean.decorators import timing
+from enocean.protocol.constants import PACKET, RORG
+from enocean.protocol.packet import Packet, RadioPacket
 
 
 @timing(1000)

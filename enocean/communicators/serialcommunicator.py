@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
-from __future__ import print_function, unicode_literals, division, absolute_import
+
 import logging
-import serial
 import time
+
+import serial
 
 from enocean.communicators.communicator import Communicator
 

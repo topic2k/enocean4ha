@@ -1,15 +1,12 @@
 # -*- encoding: utf-8 -*-
-from __future__ import print_function, unicode_literals, division, absolute_import
-import logging
-import datetime
 
+import datetime
+import logging
+import queue
 import threading
-try:
-    import queue
-except ImportError:
-    import Queue as queue
-from enocean.protocol.packet import Packet, UTETeachInPacket
+
 from enocean.protocol.constants import COMMON_COMMAND, PACKET, PARSE_RESULT, RETURN_CODE
+from enocean.protocol.packet import Packet, UTETeachInPacket
 
 
 class Communicator(threading.Thread):

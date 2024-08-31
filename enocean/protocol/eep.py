@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-from __future__ import print_function, unicode_literals, division, absolute_import
-import os
+
 import logging
-from sys import version_info
+import os
 from collections import OrderedDict
+
 from bs4 import BeautifulSoup
 
 import enocean.utils

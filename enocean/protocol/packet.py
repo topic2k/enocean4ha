@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
-from __future__ import print_function, unicode_literals, division, absolute_import
+
 import logging
 from collections import OrderedDict
 
 import enocean.utils
 from enocean.protocol import crc8
-from enocean.protocol.eep import EEP
 from enocean.protocol.constants import PACKET, RORG, PARSE_RESULT, DB0, DB2, DB3, DB4, DB6
+from enocean.protocol.eep import EEP
 
 
 class Packet(object):
