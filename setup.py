@@ -1,16 +1,18 @@
 #!/usr/bin/env python
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+
+from setuptools import setup
 
 setup(
-    name='enocean',
-    version='0.60.1',
+    name='enocean4ha',
+    version='1.0.6',
     description='EnOcean serial protocol implementation',
+    long_description='A Python library for reading and controlling EnOcean devices.',
+    long_description_content_type="text/plain",
     author='Kimmo Huoman',
     author_email='kipenroskaposti@gmail.com',
-    url='https://github.com/kipe/enocean',
+    maintainer='topic2k',
+    maintainer_email='topic2k@atlogger.de',
+    url='https://github.com/topic2k/enocean4ha',
     packages=[
         'enocean',
         'enocean.protocol',
