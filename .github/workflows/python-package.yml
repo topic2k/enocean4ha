@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.11', '3.12', '3.13.0-rc.1']
+        python-version: ['3.9', '3.10','3.11', '3.12', '3.13.0-rc.1']
 
     steps:
     - uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
         flake8 enocean --count --exit-zero --max-complexity=15 --max-line-length=127 --statistics
     - name: Test with nose
       run: |
-        nose2  -s . --quiet --log-level 100 --with-coverage
+        python -m nose2  -s . --quiet --log-level 100 --with-coverage
     - name: Coveralls
       uses: AndreMiras/coveralls-python-action@develop
       with:

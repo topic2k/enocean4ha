@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from enocean.decorators import timing
+from decorators import timing
 from enocean.protocol.constants import RORG
 from enocean.protocol.eep import EEP
 from enocean.protocol.packet import Packet

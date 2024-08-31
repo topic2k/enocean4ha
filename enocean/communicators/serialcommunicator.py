@@ -5,7 +5,7 @@ import time
 
 import serial
 
-from enocean.communicators.communicator import Communicator
+from .communicator import Communicator
 
 
 class SerialCommunicator(Communicator):

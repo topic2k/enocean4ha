@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+from decorators import timing
 from enocean.communicators.communicator import Communicator
-from enocean.decorators import timing
 from enocean.protocol.constants import PACKET
 from enocean.protocol.packet import Packet, RadioPacket
 

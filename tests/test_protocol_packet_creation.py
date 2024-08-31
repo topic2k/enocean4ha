@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-
 from unittest.case import TestCase
 
-from enocean.decorators import timing
+from decorators import timing
 from enocean.protocol.constants import PACKET, RORG
 from enocean.protocol.packet import Packet, RadioPacket
 

@@ -1,14 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 import logging
-import os
 from collections import OrderedDict
+from importlib.resources import files
 
 from bs4 import BeautifulSoup
 
-import enocean.utils
-# Left as a helper
-from enocean.protocol.constants import RORG  # noqa: F401
+from .. import utils
 
 
 class EEP(object):
@@ -18,11 +16,10 @@ class EEP(object):
         self.init_ok = False
         self.telegrams = {}
 
-        eep_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'EEP.xml')
         try:
-            with open(eep_path, 'r', encoding='UTF-8') as xml_file:
-                self.soup = BeautifulSoup(xml_file.read(), features="lxml-xml")  # ,"html.parser")
-            self.__load_xml()
+            xml_content = files('enocean.protocol').joinpath('EEP.xml').read_text()
+            self.soup = BeautifulSoup(xml_content, features="lxml-xml")
+            self.__xml_to_dict()
             self.init_ok = True
         except IOError:
             # Impossible to test with the current structure?
@@ -31,12 +28,12 @@ class EEP(object):
             self.logger.warning('Cannot load protocol file!')
             self.init_ok = False
 
-    def __load_xml(self):
+    def __xml_to_dict(self):
         self.telegrams = {
-            enocean.utils.from_hex_string(telegram['rorg']): {
-                enocean.utils.from_hex_string(function['func']): {
-                    enocean.utils.from_hex_string(type['type'], ): type
-                    for type in function.find_all('profile')
+            utils.from_hex_string(telegram['rorg']): {
+                utils.from_hex_string(function['func']): {
+                    utils.from_hex_string(typ['type'], ): typ
+                    for typ in function.find_all('profile')
                 }
                 for function in telegram.find_all('profiles')
             }

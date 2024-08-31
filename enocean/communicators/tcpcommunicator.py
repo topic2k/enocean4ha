@@ -3,7 +3,7 @@
 import logging
 import socket
 
-from enocean.communicators.communicator import Communicator
+from .communicator import Communicator
 
 
 class TCPCommunicator(Communicator):

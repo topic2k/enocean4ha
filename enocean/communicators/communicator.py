@@ -5,8 +5,8 @@ import logging
 import queue
 import threading
 
-from enocean.protocol.constants import COMMON_COMMAND, PACKET, PARSE_RESULT, RETURN_CODE
-from enocean.protocol.packet import Packet, UTETeachInPacket
+from ..protocol.constants import COMMON_COMMAND, PACKET, PARSE_RESULT, RETURN_CODE
+from ..protocol.packet import Packet, UTETeachInPacket
 
 
 class Communicator(threading.Thread):

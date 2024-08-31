@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+from decorators import timing
 from enocean.communicators import Communicator
-from enocean.decorators import timing
 from enocean.protocol.constants import RORG, DB6
 from enocean.protocol.packet import Packet
 
