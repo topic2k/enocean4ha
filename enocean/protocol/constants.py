@@ -27,12 +27,14 @@ class PACKET(IntEnum):
 
 
 # EnOceanSerialProtocol3-1-1.pdf / 33
+# noinspection PyPep8Naming
 class COMMON_COMMAND(IntEnum):
     CO_RD_VERSION = 0x03
     CO_RD_IDBASE = 0x08
 
 
 # EnOceanSerialProtocol3.pdf / 18
+# noinspection PyPep8Naming
 class RETURN_CODE(IntEnum):
     OK = 0x00
     ERROR = 0x01
@@ -42,6 +44,7 @@ class RETURN_CODE(IntEnum):
 
 
 # EnOceanSerialProtocol3.pdf / 20
+# noinspection PyPep8Naming
 class EVENT_CODE(IntEnum):
     SA_RECLAIM_NOT_SUCCESFUL = 0x01
     SA_CONFIRM_LEARN = 0x02
@@ -51,6 +54,7 @@ class EVENT_CODE(IntEnum):
 
 
 # EnOcean_Equipment_Profiles_EEP_V2.61_public.pdf / 8
+# noinspection PyPep8Naming
 class RORG(IntEnum):
     UNDEFINED = 0x00
     RPS = 0xF6
@@ -69,6 +73,7 @@ class RORG(IntEnum):
 
 
 # Results for message parsing
+# noinspection PyPep8Naming
 class PARSE_RESULT(IntEnum):
     OK = 0x00
     INCOMPLETE = 0x01
@@ -77,7 +82,7 @@ class PARSE_RESULT(IntEnum):
 
 # Data byte indexing
 # Starts from the end, so works on messages of all length.
-class DB0(object):
+class DB0:
     BIT_0 = -1
     BIT_1 = -2
     BIT_2 = -3
@@ -88,7 +93,7 @@ class DB0(object):
     BIT_7 = -8
 
 
-class DB1(object):
+class DB1:
     BIT_0 = -9
     BIT_1 = -10
     BIT_2 = -11
@@ -99,7 +104,7 @@ class DB1(object):
     BIT_7 = -16
 
 
-class DB2(object):
+class DB2:
     BIT_0 = -17
     BIT_1 = -18
     BIT_2 = -19
@@ -110,7 +115,7 @@ class DB2(object):
     BIT_7 = -24
 
 
-class DB3(object):
+class DB3:
     BIT_0 = -25
     BIT_1 = -26
     BIT_2 = -27
@@ -121,7 +126,7 @@ class DB3(object):
     BIT_7 = -32
 
 
-class DB4(object):
+class DB4:
     BIT_0 = -33
     BIT_1 = -34
     BIT_2 = -35
@@ -132,7 +137,7 @@ class DB4(object):
     BIT_7 = -40
 
 
-class DB5(object):
+class DB5:
     BIT_0 = -41
     BIT_1 = -42
     BIT_2 = -43
@@ -143,7 +148,7 @@ class DB5(object):
     BIT_7 = -48
 
 
-class DB6(object):
+class DB6:
     BIT_0 = -49
     BIT_1 = -50
     BIT_2 = -51

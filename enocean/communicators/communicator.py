@@ -10,13 +10,13 @@ from ..protocol.packet import Packet, UTETeachInPacket
 
 
 class Communicator(threading.Thread):
-    '''
+    """
     Communicator base-class for EnOcean.
     Not to be used directly, only serves as base class for SerialCommunicator etc.
-    '''
+    """
     logger = logging.getLogger('enocean.communicators.Communicator')
 
-    def __init__(self, callback=None, teach_in=True):
+    def __init__(self, callback: callable = None, teach_in: bool = True) -> None:
         super(Communicator, self).__init__()
         # Create an event to stop the thread
         self._stop_flag = threading.Event()
@@ -33,8 +33,8 @@ class Communicator(threading.Thread):
         # TODO: Not sure if we should use CO_WR_LEARNMODE??
         self.teach_in = teach_in
 
-    def _get_from_send_queue(self):
-        ''' Get message from send queue, if one exists '''
+    def _get_from_send_queue(self) -> Packet | None:
+        """ Get message from send queue, if one exists """
         try:
             packet = self.transmit.get(block=False)
             self.logger.info('Sending packet')
@@ -44,18 +44,18 @@ class Communicator(threading.Thread):
             pass
         return None
 
-    def send(self, packet):
+    def send(self, packet: Packet) -> bool:
         if not isinstance(packet, Packet):
             self.logger.error('Object to send must be an instance of Packet')
             return False
         self.transmit.put(packet)
         return True
 
-    def stop(self):
+    def stop(self) -> None:
         self._stop_flag.set()
 
-    def parse(self):
-        ''' Parses messages and puts them to receive queue '''
+    def parse(self) -> None | PARSE_RESULT:
+        """ Parses messages and puts them to receive queue """
         # Loop while we get new messages
         while True:
             status, self._buffer, packet = Packet.parse_msg(self._buffer)
@@ -79,8 +79,8 @@ class Communicator(threading.Thread):
                 self.logger.debug(packet)
 
     @property
-    def base_id(self):
-        ''' Fetches Base ID from the transmitter, if required. Otherwise returns the currently set Base ID. '''
+    def base_id(self) -> None | list[int, int, int, int]:
+        """ Fetches Base ID from the transmitter, if required. Otherwise returns the currently set Base ID. """
         # If base id is already set, return it.
         if self._base_id is not None:
             return self._base_id
@@ -94,7 +94,11 @@ class Communicator(threading.Thread):
             try:
                 packet = self.receive.get(block=True, timeout=0.1)
                 # We're only interested in responses to the request in question.
-                if packet.packet_type == PACKET.RESPONSE and packet.response == RETURN_CODE.OK and len(packet.response_data) == 4:  # noqa: E501
+                if (
+                    packet.packet_type == PACKET.RESPONSE
+                    and packet.response == RETURN_CODE.OK
+                    and len(packet.response_data) == 4
+                ):
                     # Base ID is set in the response data.
                     self._base_id = packet.response_data
                     # Put packet back to the Queue, so the user can also react to it if required...
@@ -108,6 +112,6 @@ class Communicator(threading.Thread):
         return self._base_id
 
     @base_id.setter
-    def base_id(self, base_id):
-        ''' Sets the Base ID manually, only for testing purposes. '''
+    def base_id(self, base_id: list[int, int, int, int]):
+        """ Sets the Base ID manually, only for testing purposes. """
         self._base_id = base_id
