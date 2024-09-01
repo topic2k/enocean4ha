@@ -54,6 +54,7 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 - [FUNC 0x08 - TYPE 0x01 - Range 0lx to 510lx, 0°C to +51°C and Occupancy Button](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x08---type-0x01---range-0lx-to-510lx,-0°c-to-+51°c-and-occupancy-button)
 - [FUNC 0x09 - TYPE 0x04 - CO2 Sensor](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x09---type-0x04---co2-sensor)
 - [FUNC 0x09 - TYPE 0x05 - VOC Sensor](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x09---type-0x05---voc-sensor)
+- [FUNC 0x09 - TYPE 0x09 - Gas Sensor](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x09---type-0x09---gas-sensor)
 - [FUNC 0x10 - TYPE 0x03 - Temperature Sensor and Set Point](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x10---type-0x03---temperature-sensor-and-set-point)
 - [FUNC 0x10 - TYPE 0x05 - Temperature Sensor, Set Point and Occupancy Control](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x10---type-0x05---temperature-sensor,-set-point-and-occupancy-control)
 - [FUNC 0x10 - TYPE 0x06 - Temperature Sensor, Set Point and Day/Night Control](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x10---type-0x06---temperature-sensor,-set-point-and-day/night-control)
@@ -437,6 +438,12 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 |        |                                                  |        |25 - 2-Methylpropanol                                                 |
 |        |                                                  |        |26 - Diethyl ether                                                    |
 |        |                                                  |        |255 - ozone                                                           |
+
+##### RORG 0xA5 - FUNC 0x09 - TYPE 0x09 - Gas Sensor
+
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|CO2     |CO2 Measurement                                   |value   |0.0-255.0 ↔ 0.0-2000.0 ppm                                            |
 
 
 ##### RORG 0xA5 - FUNC 0x10 - TYPE 0x03 - Temperature Sensor and Set Point

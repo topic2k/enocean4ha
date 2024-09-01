@@ -775,7 +775,7 @@
       </profile>
       <profile description="Gas Sensor" type="0x09">
         <data>
-          <value shortcut="CO2", description="CO2 Measurement" offset="16" size="8" unit="ppm">
+          <value shortcut="CO2" description="CO2 Measurement" offset="16" size="8" unit="ppm">
             <range>
               <min>0</min>
               <max>255</max>
