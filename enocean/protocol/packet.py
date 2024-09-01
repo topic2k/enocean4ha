@@ -99,7 +99,7 @@ class Packet:
 
     @staticmethod
     def parse_msg(buf: Union[list, bytearray]) -> (PARSE_RESULT, list, Any):
-        # 'Any' in return type should be [None |  UTETeachInPacket | ResponsePacket | EventPacket | Packet]
+        # 'Any' in return type should be Union[None |  UTETeachInPacket | ResponsePacket | EventPacket | Packet]
         # how to realize that?
         """
         Parses message from buffer.
@@ -265,7 +265,7 @@ class Packet:
             self.repeater_count = from_bitarray(self._bit_status[4:])
         return self.parsed
 
-    def select_eep(self, rorg_func: int, rorg_type: int, direction=None, command: None | int = None) -> bool:
+    def select_eep(self, rorg_func: int, rorg_type: int, direction=None, command: Union[None, int] = None) -> bool:
         """ Set EEP based on FUNC and TYPE """
         # set EEP profile
         self.rorg_func = rorg_func
@@ -273,8 +273,8 @@ class Packet:
         self._profile = self.eep.find_profile(self.rorg, rorg_func, rorg_type, direction, command)
         return self._profile is not None
 
-    def parse_eep(self, rorg_func: None | int = None, rorg_type: None | int = None,
-                  direction=None, command: None | int = None) -> list:
+    def parse_eep(self, rorg_func: Union[None, int] = None, rorg_type: Union[None, int] = None,
+                  direction=None, command: Union[None, int] = None) -> list:
         """ Parse EEP based on FUNC and TYPE """
         # set EEP profile, if demanded
         if rorg_func is not None and rorg_type is not None:
@@ -312,8 +312,9 @@ class RadioPacket(Packet):
         return f'{self.sender_hex}->{self.destination_hex} ({self.dBm} dBm): {packet_str}'
 
     @staticmethod
-    def create(rorg: RORG, rorg_func: int, rorg_type: int, direction=None, command: None | int = None,
-               destination: None | list = None, sender: None | list = None, learn: bool = False, **kwargs) -> Packet:
+    def create(rorg: RORG, rorg_func: int, rorg_type: int, direction=None,
+               command: Union[None, int] = None, destination: Union[None, list] = None,
+               sender: Union[None, list] = None, learn: bool = False, **kwargs) -> Packet:
         return Packet.create(PACKET.RADIO_ERP1, rorg, rorg_func, rorg_type,
                              direction, command, destination, sender, learn, **kwargs)
 
@@ -409,7 +410,7 @@ class UTETeachInPacket(RadioPacket):
             self.learn = True
         return self.parsed
 
-    def create_response_packet(self, sender_id: list, response: None | list = None) -> RadioPacket:
+    def create_response_packet(self, sender_id: list, response: Union[None, list] = None) -> RadioPacket:
         if response is None:
             response = self.TEACHIN_ACCEPTED
 
