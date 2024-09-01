@@ -17,7 +17,7 @@ class EEP(object):
         self.telegrams = {}
 
         try:
-            xml_content = files('enocean.protocol').joinpath('EEP.xml').read_text()
+            xml_content = files('enocean.protocol').joinpath('EEP.xml').read_text(encoding='utf-8')
             self.soup = BeautifulSoup(xml_content, features="lxml-xml")
             self.__xml_to_dict()
             self.init_ok = True

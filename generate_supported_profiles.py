@@ -6,20 +6,40 @@ import codecs
 from enocean.protocol.eep import EEP
 
 ROW_FORMAT = '|{:8s}|{:50s}|{:8s}|{:70s}|\n'
-
+BASE_URL = "https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#"
 
 eep = EEP()
 
 with codecs.open('SUPPORTED_PROFILES.md', 'w', 'utf-8') as f_handle:
-    f_handle.write('# Supported profiles\n')
-    f_handle.write('All profiles (should) correspond to the official [EEP](http://www.enocean-alliance.org/eep/) by EnOcean.\n\n')
+    write = f_handle.write
+    write("# Supported profiles\n")
+    write(
+        "All profiles (should) correspond to the official"
+        " [EEP](http://www.enocean-alliance.org/eep/) by EnOcean.\n\n"
+    )
 
+    # table of contents
     for telegram in eep.soup.find_all('telegram'):
-        f_handle.write('### %s (%s)\n' % (telegram['description'], telegram['rorg']))
+        write("<details>")
+        write(f"<summary> {telegram['description']} ({telegram['rorg']}) </summary>\n\n")
         for func in telegram.find_all('profiles'):
             # f_handle.write('#####  FUNC %s - %s\n' % (func['func'], func['description']))
             for profile in func.find_all('profile'):
-                f_handle.write('##### RORG %s - FUNC %s - TYPE %s - %s\n\n' % (telegram['rorg'], func['func'], profile['type'], profile['description']))
+                write(
+                    f"- [FUNC {func['func']} - TYPE {profile['type']} - {profile['description']}]"
+                    f"({BASE_URL}rorg-{telegram['rorg']}---func-{func['func']}---type-{profile['type']}---{profile['description'].lower().replace(' ', '-')})\n"
+                )
+
+        write("\n</details>\n\n")
+    write('\n\n---\n\n')
+
+    # contents
+    for telegram in eep.soup.find_all('telegram'):
+        write('### %s (%s)\n\n' % (telegram['description'], telegram['rorg']))
+        for func in telegram.find_all('profiles'):
+            # f_handle.write('#####  FUNC %s - %s\n' % (func['func'], func['description']))
+            for profile in func.find_all('profile'):
+                write('##### RORG %s - FUNC %s - TYPE %s - %s\n\n' % (telegram['rorg'], func['func'], profile['type'], profile['description']))
 
                 for data in profile.find_all('data'):
                     header = []
@@ -30,10 +50,10 @@ with codecs.open('SUPPORTED_PROFILES.md', 'w', 'utf-8') as f_handle:
                         header.append('command: %s' % (data.get('command')))
 
                     if header:
-                        f_handle.write('###### %s\n' % ' '.join(header))
+                        write('###### %s\n' % ' '.join(header))
 
-                    f_handle.write(ROW_FORMAT.format('shortcut', 'description', 'type', 'values'))
-                    f_handle.write(ROW_FORMAT.format('--------', '--------------------------------------------------', '--------', '----'))
+                    write(ROW_FORMAT.format('shortcut', 'description', 'type', 'values'))
+                    write(ROW_FORMAT.format('--------', '--------------------------------------------------', '--------', '----'))
                     for child in data.children:
                         if child.name is None:
                             continue
@@ -58,13 +78,15 @@ with codecs.open('SUPPORTED_PROFILES.md', 'w', 'utf-8') as f_handle:
 
                                 values.append('%s-%s ↔ %s-%s %s' % (range_min, range_max, scale_min, scale_max, parent['unit']))
                         if not values:
-                            f_handle.write(ROW_FORMAT.format(child['shortcut'], child['description'], child.name, ''))
+                            write(ROW_FORMAT.format(child['shortcut'], child['description'], child.name, ''))
                             continue
 
-                        f_handle.write(ROW_FORMAT.format(child['shortcut'], child['description'], child.name, values[0]))
+                        write(ROW_FORMAT.format(
+                            child.get('shortcut', ''),
+                            child.get('description', ''),
+                            child.name, values[0]
+                        ))
                         for i in range(1, len(values)):
-                            f_handle.write(ROW_FORMAT.format('', '', '', values[i]))
-                    f_handle.write('\n')
-                f_handle.write('\n')
-
-            f_handle.write('\n')
+                            write(ROW_FORMAT.format('', '', '', values[i]))
+                    write('\n')
+            write('\n')

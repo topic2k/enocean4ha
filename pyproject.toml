@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "enocean4ha"
-dynamic = [ "version", ]
+dynamic = [ "version", "readme"]
 authors = [
     { name="Kimmo Huoman", email="kipenroskaposti@gmail.com" },
 ]
@@ -13,7 +13,6 @@ maintainers = [
 ]
 description = "EnOcean serial protocol implementation"
 keywords = [ "EnOcean", "HomeAssistant", ]
-readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -37,6 +36,7 @@ tests = [ "nose2>=0.15.1", ]
 
 [tool.setuptools.dynamic]
 version = { attr = "enocean.__version__" }
+readme = { file = [ "README.md", "SUPPORTED_PROFILES.md" ], content-type = "text/markdown" }
 
 [tool.setuptools.packages.find]
 where = [ "." ]
