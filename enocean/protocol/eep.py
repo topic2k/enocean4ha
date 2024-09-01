@@ -3,6 +3,7 @@
 import logging
 from collections import OrderedDict
 from importlib.resources import files
+from typing import Union
 
 from bs4 import BeautifulSoup, Tag
 
@@ -111,7 +112,7 @@ class EEP:
             }
         }
 
-    def _set_value(self, target: Tag, value: int | float, bitarray: list) -> list:
+    def _set_value(self, target: Tag, value: Union[int, float], bitarray: list) -> list:
         """ set given numeric value to target field in bitarray """
         # derive raw value
         rng = target.find('range')
@@ -124,7 +125,7 @@ class EEP:
         # store value in bitfield
         return self._set_raw(target, int(raw_value), bitarray)
 
-    def _set_enum(self, target: Tag, value: int | str, bitarray: list) -> list:
+    def _set_enum(self, target: Tag, value: Union[int, str], bitarray: list) -> list:
         """ set given enum value (by string or integer value) to target field in bitarray """
         # derive raw value
         if isinstance(value, int):
@@ -147,7 +148,8 @@ class EEP:
         bitarray[int(target['offset'])] = data
         return bitarray
 
-    def find_profile(self, eep_rorg: int, rorg_func: int, rorg_type: int, direction=None, command=None) -> None | Tag:
+    def find_profile(self, eep_rorg: int, rorg_func: int, rorg_type: int,
+                     direction=None, command=None) -> Union[None, Tag]:
         """ Find profile and data description, matching RORG, FUNC and TYPE """
         if not self.init_ok:
             self.logger.warning('EEP.xml not loaded!')

@@ -1,11 +1,13 @@
 # -*- encoding: utf-8 -*-
+from typing import Union
+
 
 def get_bit(byte: int, bit: int) -> int:
     """ Get bit value from byte """
     return (byte >> bit) & 0x01
 
 
-def combine_hex(data: list | bytearray) -> int:
+def combine_hex(data: Union[list, bytearray]) -> int:
     """ Combine list of integer values to one big integer """
     output = 0x00
     for i, value in enumerate(reversed(data)):
@@ -13,7 +15,7 @@ def combine_hex(data: list | bytearray) -> int:
     return output
 
 
-def to_bitarray(data: list | bytearray, width=8) -> list[bool]:
+def to_bitarray(data: Union[list, bytearray], width=8) -> list[bool]:
     """ Convert data (list of integers, bytearray or integer) to bitarray """
     if isinstance(data, list) or isinstance(data, bytearray):
         data = combine_hex(data)
@@ -25,14 +27,14 @@ def from_bitarray(data: list[bool]) -> int:
     return int(''.join(['1' if x else '0' for x in data]), 2)
 
 
-def to_hex_string(data: list | int) -> str:
+def to_hex_string(data: Union[list, int]) -> str:
     """ Convert list of integers to a hex string, separated by ":" """
     if isinstance(data, int):
         return f'{data:02X}'
     return ':'.join([f'{o:02X}' for o in data])
 
 
-def from_hex_string(hex_string: str) -> int | list:
+def from_hex_string(hex_string: str) -> Union[int, list]:
     reval = [int(x, 16) for x in hex_string.split(':')]
     if len(reval) == 1:
         return reval[0]

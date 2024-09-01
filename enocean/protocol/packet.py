@@ -2,7 +2,7 @@
 
 import logging
 from collections import OrderedDict
-from typing import Any
+from typing import Any, Union
 
 from .crc8 import calc
 from .constants import PACKET, RORG, PARSE_RESULT, DB0, DB2, DB3, DB4, DB6
@@ -20,7 +20,7 @@ class Packet:
     eep = EEP()
     logger = logging.getLogger('enocean.protocol.packet')
 
-    def __init__(self, packet_type: PACKET, data: None | list = None, optional: None | list = None) -> None:
+    def __init__(self, packet_type: PACKET, data: Union[None, list] = None, optional: Union[None, list] = None) -> None:
         self.packet_type = packet_type
         self.rorg = RORG.UNDEFINED
         self.rorg_func = None
@@ -98,7 +98,7 @@ class Packet:
         self.status = from_bitarray(value)
 
     @staticmethod
-    def parse_msg(buf: list | bytearray) -> (PARSE_RESULT, list, Any):
+    def parse_msg(buf: Union[list, bytearray]) -> (PARSE_RESULT, list, Any):
         # 'Any' in return type should be [None |  UTETeachInPacket | ResponsePacket | EventPacket | Packet]
         # how to realize that?
         """
@@ -168,9 +168,9 @@ class Packet:
     def create(
         packet_type: PACKET, rorg: RORG, rorg_func: int, rorg_type: int,
         direction=None,
-        command: None | int = None,
-        destination: None | list = None,
-        sender: None | list = None,
+        command: Union[None, int] = None,
+        destination: Union[None, list] = None,
+        sender: Union[None, list] = None,
         learn: bool = False,
         **kwargs
     ):

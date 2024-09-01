@@ -4,6 +4,7 @@ import datetime
 import logging
 import queue
 import threading
+from typing import Union
 
 from ..protocol.constants import COMMON_COMMAND, PACKET, PARSE_RESULT, RETURN_CODE
 from ..protocol.packet import Packet, UTETeachInPacket
@@ -33,7 +34,7 @@ class Communicator(threading.Thread):
         # TODO: Not sure if we should use CO_WR_LEARNMODE??
         self.teach_in = teach_in
 
-    def _get_from_send_queue(self) -> Packet | None:
+    def _get_from_send_queue(self) -> Union[Packet, None]:
         """ Get message from send queue, if one exists """
         try:
             packet = self.transmit.get(block=False)
@@ -54,7 +55,7 @@ class Communicator(threading.Thread):
     def stop(self) -> None:
         self._stop_flag.set()
 
-    def parse(self) -> None | PARSE_RESULT:
+    def parse(self) -> Union[None, PARSE_RESULT]:
         """ Parses messages and puts them to receive queue """
         # Loop while we get new messages
         while True:
@@ -79,7 +80,7 @@ class Communicator(threading.Thread):
                 self.logger.debug(packet)
 
     @property
-    def base_id(self) -> None | list[int, int, int, int]:
+    def base_id(self) -> Union[None, list[int, int, int, int]]:
         """ Fetches Base ID from the transmitter, if required. Otherwise returns the currently set Base ID. """
         # If base id is already set, return it.
         if self._base_id is not None:
