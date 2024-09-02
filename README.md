@@ -1,8 +1,8 @@
 # Python EnOcean #
 
-[![Linting And Testing Status](https://github.com/topic2k/enocean4ha/actions/workflows/lint_and_test.yml/badge.svg?branch=topix)](https://github.com/topic2k/enocean4ha/actions/workflows/lint_and_test.yml)
-[![Coverage Status](https://coveralls.io/repos/github/topic2k/enocean4ha/badge.svg?branch=topix)](https://coveralls.io/github/topic2k/enocean4ha?branch=topix)
-[![PyPi](https://img.shields.io/pypi/v/wxpython?logo=pypi&logoColor=959DA5)](https://test.pypi.org/project/enocean4ha/)
+[![Linting And Testing Status](https://github.com/topic2k/enocean4ha/actions/workflows/lint_and_test.yml/badge.svg?branch=main)](https://github.com/topic2k/enocean4ha/actions/workflows/lint_and_test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/topic2k/enocean4ha/badge.svg?branch=main)](https://coveralls.io/github/topic2k/enocean4ha?branch=main)
+[![PyPi](https://img.shields.io/pypi/v/enocean4ha?logo=pypi&logoColor=959DA5)](https://pypi.org/project/enocean4ha/)
 
 
 A Python library for reading and controlling [EnOcean](http://www.enocean.com/) devices.
