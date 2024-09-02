@@ -5,9 +5,9 @@ name: Linting and testing
 
 on:
   push:
-    branches: [ topix ]
+    branches: [ main ]
   pull_request:
-    branches: [ topix ]
+    branches: [ main ]
 
 jobs:
   test:
