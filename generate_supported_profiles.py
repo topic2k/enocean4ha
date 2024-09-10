@@ -74,10 +74,16 @@ with codecs.open('SUPPORTED_PROFILES.md', 'w', 'utf-8') as f_handle:
                                 range_min = float(item.find('min').text)
                                 range_max = float(item.find('max').text)
                                 scale = parent.find('scale')
-                                scale_min = float(scale.find('min').text)
-                                scale_max = float(scale.find('max').text)
+                                if scale:
+                                    scale_min = float(scale.find('min').text)
+                                    scale_max = float(scale.find('max').text)
+                                else:
+                                    scale_min = ''
+                                    scale_max = ''
+                                unit = item.get('unit') or parent.get('unit')
 
-                                values.append(f"{range_min}-{range_max} ↔ {scale_min}-{scale_max} {parent['unit']}")
+                                values.append(f"{range_min}-{range_max} ↔ {scale_min}-{scale_max} {unit}")
+
                         if not values:
                             write(ROW_FORMAT.format(child['shortcut'], child['description'], child.name, ''))
                             continue
