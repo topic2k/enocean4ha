@@ -38,14 +38,13 @@ class Communicator(threading.Thread):
         """ Get message from send queue, if one exists """
         try:
             packet = self.transmit.get(block=False)
-            self.logger.debug('Sending packet:')
-            self.logger.debug(f"   {packet}")
             return packet
         except queue.Empty:
             pass
         return None
 
     def send(self, packet: Packet) -> bool:
+        self.logger.debug(f'sending: {packet}')
         if not isinstance(packet, Packet):
             self.logger.error('Object to send must be an instance of Packet')
             return False
@@ -73,11 +72,11 @@ class Communicator(threading.Thread):
                     self.logger.info('Sending response to UTE teach-in.')
                     self.send(response_packet)
 
+                self.logger.debug(f"received: {packet}")
                 if self.__callback is None:
                     self.receive.put(packet)
                 else:
                     self.__callback(packet)
-                self.logger.debug(packet)
 
     @property  # getter
     def callback(self):
