@@ -5,18 +5,20 @@ import socket
 
 from .communicator import Communicator
 
+LOGGER = logging.getLogger('enocean.communicators.TCPCommunicator')
+
 
 class TCPCommunicator(Communicator):
     """ Socket communicator class for EnOcean radio """
-    logger = logging.getLogger('enocean.communicators.TCPCommunicator')
 
-    def __init__(self, host: str = '', port: int = 9637) -> None:
-        super(TCPCommunicator, self).__init__()
+    def __init__(self, host: str = '', port: int = 9637, loglevel=logging.NOTSET) -> None:
+        super().__init__(loglevel=loglevel)
+        LOGGER.setLevel(loglevel)
         self.host = host
         self.port = port
 
     def run(self) -> None:
-        self.logger.info('TCPCommunicator started')
+        LOGGER.info('TCPCommunicator started')
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((self.host, self.port))
         sock.listen(5)
@@ -27,7 +29,7 @@ class TCPCommunicator(Communicator):
                 (client, addr) = sock.accept()
             except socket.timeout:
                 continue
-            self.logger.debug(f'Client "{addr}" connected')
+            LOGGER.debug(f'Client "{addr}" connected')
             client.settimeout(0.5)
             while True and not self._stop_flag.is_set():
                 try:
@@ -39,6 +41,6 @@ class TCPCommunicator(Communicator):
                 self._buffer.extend(bytearray(data))
             self.parse()
             client.close()
-            self.logger.debug('Client disconnected')
+            LOGGER.debug('Client disconnected')
         sock.close()
-        self.logger.info('TCPCommunicator stopped')
+        LOGGER.info('TCPCommunicator stopped')

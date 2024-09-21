@@ -496,6 +496,34 @@
           </enum>
         </data>
       </profile>
+      <profile type="0x02" description="Range -20°C to +60°C and 0% to 100%">
+        <data>
+          <value description="Rel. Humidity (linear)" shortcut="HUM" offset="8" size="8" unit="%">
+            <range>
+              <min>0</min>
+              <max>250</max>
+            </range>
+            <scale>
+              <min>0</min>
+              <max>100</max>
+            </scale>
+          </value>
+          <value description="Temperature (linear)" shortcut="TMP" offset="16" size="8" unit="°C">
+            <range>
+              <min>0</min>
+              <max>250</max>
+            </range>
+            <scale>
+              <min>-20</min>
+              <max>60</max>
+            </scale>
+          </value>
+          <enum description="Availability of the Temperature Sensor" shortcut="TSN" offset="30" size="1">
+            <item description="not available" value="0" />
+            <item description="available" value="1" />
+          </enum>
+        </data>
+      </profile>
       <profile type="0x03" description="Range -20°C to +60°C 10bit-measurement and 0% to 100%">
         <data>
           <value description="Rel. Humidity (linear)" shortcut="HUM" offset="0" size="8" unit="%">
@@ -522,6 +550,30 @@
             <item description="Heartbeat" value="0" />
             <item description="Event triggered" value="1" />
           </enum>
+        </data>
+      </profile>
+      <profile type="0x04" description="Range -40°C to +120°C 12bit-measurement and 0% to 100%">
+        <data>
+          <value description="Rel. Humidity (linear)" shortcut="HUM" offset="0" size="8" unit="%">
+            <range>
+              <min>0</min>
+              <max>199</max>
+            </range>
+            <scale>
+              <min>0</min>
+              <max>100</max>
+            </scale>
+          </value>
+          <value description="Temperature (linear)" shortcut="TMP" offset="12" size="12" unit="°C">
+            <range>
+              <min>0</min>
+              <max>1599</max>
+            </range>
+            <scale>
+              <min>-40</min>
+              <max>+120</max>
+            </scale>
+          </value>
         </data>
       </profile>
     </profiles>
@@ -652,7 +704,7 @@
       </profile>
     </profiles>
     <profiles func="0x08" description="Light, Temperature and Occupancy Sensor">
-      <profile description="Range 0lx to 510lx, 0°C to +51°C and Occupancy Button" type="0x01">
+      <profile type="0x01" description="Range 0lx to 510lx, 0°C to +51°C and Occupancy Button" >
         <data>
           <value shortcut="SVC" description="Supply voltage (linear)" offset="0" size="8" unit="V">
             <range>
@@ -682,6 +734,90 @@
             <scale>
               <min>0</min>
               <max>51</max>
+            </scale>
+          </value>
+          <enum shortcut="PIRS" description="PIR Status" offset="30" size="1">
+            <item description="PIR on" value="0" />
+            <item description="PIR off" value="1" />
+          </enum>
+          <enum shortcut="OCC" description="Occupancy Button" offset="31" size="1">
+            <item description="Button pressed" value="0" />
+            <item description="Button released" value="1" />
+          </enum>
+        </data>
+      </profile>
+      <profile type="0x02" description="Range 0lx to 1020lx, 0°C to +51°C and Occupancy Button" >
+        <data>
+          <value shortcut="SVC" description="Supply voltage (linear)" offset="0" size="8" unit="V">
+            <range>
+              <min>0</min>
+              <max>255</max>
+            </range>
+            <scale>
+              <min>0</min>
+              <max>5.100000</max>
+            </scale>
+          </value>
+          <value shortcut="ILL" description="Illumination (linear)" offset="8" size="8" unit="lx">
+            <range>
+              <min>0</min>
+              <max>255</max>
+            </range>
+            <scale>
+              <min>0</min>
+              <max>1020</max>
+            </scale>
+          </value>
+          <value shortcut="TMP" description="Temperature (linear)" offset="16" size="8" unit="°C">
+            <range>
+              <min>0</min>
+              <max>255</max>
+            </range>
+            <scale>
+              <min>0</min>
+              <max>51</max>
+            </scale>
+          </value>
+          <enum shortcut="PIRS" description="PIR Status" offset="30" size="1">
+            <item description="PIR on" value="0" />
+            <item description="PIR off" value="1" />
+          </enum>
+          <enum shortcut="OCC" description="Occupancy Button" offset="31" size="1">
+            <item description="Button pressed" value="0" />
+            <item description="Button released" value="1" />
+          </enum>
+        </data>
+      </profile>
+      <profile type="0x03" description="Range 0lx to 1020lx, 0°C to +51°C and Occupancy Button" >
+        <data>
+          <value shortcut="SVC" description="Supply voltage (linear)" offset="0" size="8" unit="V">
+            <range>
+              <min>0</min>
+              <max>255</max>
+            </range>
+            <scale>
+              <min>0</min>
+              <max>5.100000</max>
+            </scale>
+          </value>
+          <value shortcut="ILL" description="Illumination (linear)" offset="8" size="8" unit="lx">
+            <range>
+              <min>0</min>
+              <max>255</max>
+            </range>
+            <scale>
+              <min>0</min>
+              <max>1530</max>
+            </scale>
+          </value>
+          <value shortcut="TMP" description="Temperature (linear)" offset="16" size="8" unit="°C">
+            <range>
+              <min>0</min>
+              <max>255</max>
+            </range>
+            <scale>
+              <min>-30</min>
+              <max>50</max>
             </scale>
           </value>
           <enum shortcut="PIRS" description="PIR Status" offset="30" size="1">
@@ -813,7 +949,7 @@
           </value>
         </data>
       </profile>
-      <profile description="Temperature Sensor, Set Point and Occupancy Control" type="0x05">
+      <profile type="0x05" description="Temperature Sensor, Set Point and Occupancy Control">
         <data>
           <value shortcut="SP" description="Set Point (linear)" offset="8" size="8" unit="%">
             <range>
@@ -841,7 +977,7 @@
           </enum>
         </data>
       </profile>
-      <profile description="Temperature Sensor, Set Point and Day/Night Control" type="0x06">
+      <profile type="0x06" description="Temperature Sensor, Set Point and Day/Night Control">
         <data>
           <value shortcut="SP" description="Set Point (linear)" offset="8" size="8" unit="%">
             <range>
@@ -869,7 +1005,7 @@
           </enum>
         </data>
       </profile>
-      <profile description="Temperature and Humidity Sensor, Set Point and Occupancy Control" type="0x10">
+      <profile type="0x10" description="Temperature and Humidity Sensor, Set Point and Occupancy Control">
         <data>
           <value shortcut="SP" description="Set Point (linear)" offset="0" size="8" unit="">
             <range>
@@ -907,7 +1043,7 @@
           </enum>
         </data>
       </profile>
-      <profile description="Temperature and Humidity Sensor and Set Point" type="0x12">
+      <profile type="0x12" description="Temperature and Humidity Sensor and Set Point">
         <data>
           <value shortcut="SP" description="Set Point (linear)" offset="0" size="8" unit="">
             <range>
@@ -1485,10 +1621,6 @@
             <item description="NO window open detected" value="0" />
             <item description="Window open detected" value="1" />
           </enum>
-          <enum shortcut="LRNB" description="LRN Bit" offset="28" size="1">
-            <item description="Teach-in telegram" value="0" />
-            <item description="Data telegram" value="1" />
-          </enum>
           <enum shortcut="RCE" description="Radio Com Error" offset="29" size="1">
             <item description="Radio communication is stable" value="0" />
             <item description="6 or more consecutive communication erros have occured" value="1" />
@@ -1564,10 +1696,6 @@
           <enum shortcut="SBY" description="Standbye" offset="23" size="1">
             <item description="Normal operation" value="0" />
             <item description="Enter standbye" value="1" />
-          </enum>
-          <enum shortcut="LRNB" description="LRN Bit" offset="28" size="1">
-            <item description="Teach-in telegram" value="0" />
-            <item description="Data telegram" value="1" />
           </enum>
         </data>
       </profile>
