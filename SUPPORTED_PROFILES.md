@@ -46,12 +46,16 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 - [FUNC 0x02 - TYPE 0x20 - 10 Bit Temperature Sensor Range -10°C to +41.2°C](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x02---type-0x20---10-bit-temperature-sensor-range--10°c-to-+41.2°c)
 - [FUNC 0x02 - TYPE 0x30 - 10 Bit Temperature Sensor Range -40°C to +62.3°C](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x02---type-0x30---10-bit-temperature-sensor-range--40°c-to-+62.3°c)
 - [FUNC 0x04 - TYPE 0x01 - Range 0°C to +40°C and 0% to 100%](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x04---type-0x01---range-0°c-to-+40°c-and-0%-to-100%)
+- [FUNC 0x04 - TYPE 0x02 - Range -20°C to +60°C and 0% to 100%](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x04---type-0x02---range--20°c-to-+60°c-and-0%-to-100%)
 - [FUNC 0x04 - TYPE 0x03 - Range -20°C to +60°C 10bit-measurement and 0% to 100%](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x04---type-0x03---range--20°c-to-+60°c-10bit-measurement-and-0%-to-100%)
+- [FUNC 0x04 - TYPE 0x04 - Range -40°C to +120°C 12bit-measurement and 0% to 100%](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x04---type-0x04---range--40°c-to-+120°c-12bit-measurement-and-0%-to-100%)
 - [FUNC 0x06 - TYPE 0x01 - Range 300lx to 60.000lx](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x06---type-0x01---range-300lx-to-60.000lx)
 - [FUNC 0x06 - TYPE 0x02 - Range 0lx to 1.020lx](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x06---type-0x02---range-0lx-to-1.020lx)
 - [FUNC 0x07 - TYPE 0x01 - Occupancy with Supply voltage monitor](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x07---type-0x01---occupancy-with-supply-voltage-monitor)
 - [FUNC 0x07 - TYPE 0x03 - Occupancy with Supply voltage monitor and 10-bit illumination measurement](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x07---type-0x03---occupancy-with-supply-voltage-monitor-and-10-bit-illumination-measurement)
 - [FUNC 0x08 - TYPE 0x01 - Range 0lx to 510lx, 0°C to +51°C and Occupancy Button](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x08---type-0x01---range-0lx-to-510lx,-0°c-to-+51°c-and-occupancy-button)
+- [FUNC 0x08 - TYPE 0x02 - Range 0lx to 1020lx, 0°C to +51°C and Occupancy Button](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x08---type-0x02---range-0lx-to-1020lx,-0°c-to-+51°c-and-occupancy-button)
+- [FUNC 0x08 - TYPE 0x03 - Range 0lx to 1020lx, 0°C to +51°C and Occupancy Button](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x08---type-0x03---range-0lx-to-1020lx,-0°c-to-+51°c-and-occupancy-button)
 - [FUNC 0x09 - TYPE 0x04 - CO2 Sensor](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x09---type-0x04---co2-sensor)
 - [FUNC 0x09 - TYPE 0x05 - VOC Sensor](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x09---type-0x05---voc-sensor)
 - [FUNC 0x09 - TYPE 0x09 - Gas Sensor](https://github.com/topic2k/enocean4ha/blob/topix/SUPPORTED_PROFILES.md#rorg-0xA5---func-0x09---type-0x09---gas-sensor)
@@ -339,6 +343,15 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 |TSN     |Availability of the Temperature Sensor            |enum    |0 - not available                                                     |
 |        |                                                  |        |1 - available                                                         |
 
+##### RORG 0xA5 - FUNC 0x04 - TYPE 0x02 - Range -20°C to +60°C and 0% to 100%
+
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|HUM     |Rel. Humidity (linear)                            |value   |0.0-250.0 ↔ 0.0-100.0 %                                               |
+|TMP     |Temperature (linear)                              |value   |0.0-250.0 ↔ -20.0-60.0 °C                                             |
+|TSN     |Availability of the Temperature Sensor            |enum    |0 - not available                                                     |
+|        |                                                  |        |1 - available                                                         |
+
 ##### RORG 0xA5 - FUNC 0x04 - TYPE 0x03 - Range -20°C to +60°C 10bit-measurement and 0% to 100%
 
 |shortcut|description                                       |type    |values                                                                |
@@ -347,6 +360,13 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 |TMP     |Temperature (linear)                              |value   |0.0-1023.0 ↔ -20.0-60.0 °C                                            |
 |TTP     |Telegram Type                                     |enum    |0 - Heartbeat                                                         |
 |        |                                                  |        |1 - Event triggered                                                   |
+
+##### RORG 0xA5 - FUNC 0x04 - TYPE 0x04 - Range -40°C to +120°C 12bit-measurement and 0% to 100%
+
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|HUM     |Rel. Humidity (linear)                            |value   |0.0-199.0 ↔ 0.0-100.0 %                                               |
+|TMP     |Temperature (linear)                              |value   |0.0-1599.0 ↔ -40.0-120.0 °C                                           |
 
 
 ##### RORG 0xA5 - FUNC 0x06 - TYPE 0x01 - Range 300lx to 60.000lx
@@ -395,6 +415,30 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 |SVC     |Supply voltage (linear)                           |value   |0.0-255.0 ↔ 0.0-5.1 V                                                 |
 |ILL     |Illumination (linear)                             |value   |0.0-255.0 ↔ 0.0-510.0 lx                                              |
 |TMP     |Temperature (linear)                              |value   |0.0-255.0 ↔ 0.0-51.0 °C                                               |
+|PIRS    |PIR Status                                        |enum    |0 - PIR on                                                            |
+|        |                                                  |        |1 - PIR off                                                           |
+|OCC     |Occupancy Button                                  |enum    |0 - Button pressed                                                    |
+|        |                                                  |        |1 - Button released                                                   |
+
+##### RORG 0xA5 - FUNC 0x08 - TYPE 0x02 - Range 0lx to 1020lx, 0°C to +51°C and Occupancy Button
+
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|SVC     |Supply voltage (linear)                           |value   |0.0-255.0 ↔ 0.0-5.1 V                                                 |
+|ILL     |Illumination (linear)                             |value   |0.0-255.0 ↔ 0.0-1020.0 lx                                             |
+|TMP     |Temperature (linear)                              |value   |0.0-255.0 ↔ 0.0-51.0 °C                                               |
+|PIRS    |PIR Status                                        |enum    |0 - PIR on                                                            |
+|        |                                                  |        |1 - PIR off                                                           |
+|OCC     |Occupancy Button                                  |enum    |0 - Button pressed                                                    |
+|        |                                                  |        |1 - Button released                                                   |
+
+##### RORG 0xA5 - FUNC 0x08 - TYPE 0x03 - Range 0lx to 1020lx, 0°C to +51°C and Occupancy Button
+
+|shortcut|description                                       |type    |values                                                                |
+|--------|--------------------------------------------------|--------|----                                                                  |
+|SVC     |Supply voltage (linear)                           |value   |0.0-255.0 ↔ 0.0-5.1 V                                                 |
+|ILL     |Illumination (linear)                             |value   |0.0-255.0 ↔ 0.0-1530.0 lx                                             |
+|TMP     |Temperature (linear)                              |value   |0.0-255.0 ↔ -30.0-50.0 °C                                             |
 |PIRS    |PIR Status                                        |enum    |0 - PIR on                                                            |
 |        |                                                  |        |1 - PIR off                                                           |
 |OCC     |Occupancy Button                                  |enum    |0 - Button pressed                                                    |
@@ -702,8 +746,6 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 |        |                                                  |        |1 - Sufficently charged                                               |
 |DWO     |Window open detection                             |enum    |0 - NO window open detected                                           |
 |        |                                                  |        |1 - Window open detected                                              |
-|LRNB    |LRN Bit                                           |enum    |0 - Teach-in telegram                                                 |
-|        |                                                  |        |1 - Data telegram                                                     |
 |RCE     |Radio Com Error                                   |enum    |0 - Radio communication is stable                                     |
 |        |                                                  |        |1 - 6 or more consecutive communication erros have occured            |
 |RSS     |Radio Signal strength                             |enum    |0 - Radio signal is strong                                            |
@@ -734,8 +776,6 @@ All profiles (should) correspond to the official [EEP](https://www.enocean-allia
 |        |                                                  |        |1 - Request feedtemperature                                           |
 |SBY     |Standbye                                          |enum    |0 - Normal operation                                                  |
 |        |                                                  |        |1 - Enter standbye                                                    |
-|LRNB    |LRN Bit                                           |enum    |0 - Teach-in telegram                                                 |
-|        |                                                  |        |1 - Data telegram                                                     |
 
 
 ##### RORG 0xA5 - FUNC 0x12 - TYPE 0x01 - Electricity
