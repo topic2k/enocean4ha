@@ -9,7 +9,7 @@ authors = [
     { name="Kimmo Huoman", email="kipenroskaposti@gmail.com" },
 ]
 maintainers = [
-    { name="topic2k", email="topic2k@atlogger.de" },
+    { name="Torsten Pieper", email="topic2k@atlogger.de" },
 ]
 description = "EnOcean serial protocol implementation"
 keywords = [ "EnOcean", "HomeAssistant", ]

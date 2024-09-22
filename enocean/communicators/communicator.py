@@ -9,16 +9,18 @@ from typing import Union
 from ..protocol.constants import COMMON_COMMAND, PACKET, PARSE_RESULT, RETURN_CODE
 from ..protocol.packet import Packet, UTETeachInPacket
 
+LOGGER = logging.getLogger('enocean.communicators.Communicator')
+
 
 class Communicator(threading.Thread):
     """
     Communicator base-class for EnOcean.
     Not to be used directly, only serves as base class for SerialCommunicator etc.
     """
-    logger = logging.getLogger('enocean.communicators.Communicator')
 
-    def __init__(self, callback: callable = None, teach_in: bool = True) -> None:
-        super(Communicator, self).__init__()
+    def __init__(self, callback: callable = None, teach_in: bool = True, loglevel=logging.NOTSET) -> None:
+        super().__init__()
+        LOGGER.setLevel(loglevel)
         # Create an event to stop the thread
         self._stop_flag = threading.Event()
         # Input buffer
@@ -38,16 +40,15 @@ class Communicator(threading.Thread):
         """ Get message from send queue, if one exists """
         try:
             packet = self.transmit.get(block=False)
-            self.logger.info('Sending packet')
-            self.logger.debug(packet)
             return packet
         except queue.Empty:
             pass
         return None
 
     def send(self, packet: Packet) -> bool:
+        LOGGER.debug(f'sending: {packet}')
         if not isinstance(packet, Packet):
-            self.logger.error('Object to send must be an instance of Packet')
+            LOGGER.error('Object to send must be an instance of Packet')
             return False
         self.transmit.put(packet)
         return True
@@ -70,14 +71,14 @@ class Communicator(threading.Thread):
 
                 if isinstance(packet, UTETeachInPacket) and self.teach_in:
                     response_packet = packet.create_response_packet(self.base_id)
-                    self.logger.info('Sending response to UTE teach-in.')
+                    LOGGER.info('Sending response to UTE teach-in.')
                     self.send(response_packet)
 
+                LOGGER.debug(f"received: {packet}")
                 if self.__callback is None:
                     self.receive.put(packet)
                 else:
                     self.__callback(packet)
-                self.logger.debug(packet)
 
     @property  # getter
     def callback(self):
@@ -89,7 +90,7 @@ class Communicator(threading.Thread):
 
     @property
     def base_id(self) -> Union[None, list[int, int, int, int]]:
-        """ Fetches Base ID from the transmitter, if required. Otherwise returns the currently set Base ID. """
+        """ Fetches Base ID from the transmitter, if required. Otherwise, returns the currently set Base ID. """
         # If base id is already set, return it.
         if self._base_id is not None:
             return self._base_id
