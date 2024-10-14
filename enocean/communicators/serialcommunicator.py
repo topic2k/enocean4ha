@@ -20,7 +20,7 @@ class SerialCommunicator(Communicator):
         self.__ser = serial.Serial(port, 57600, timeout=0.1)
 
     def run(self) -> None:
-        LOGGER.info('SerialCommunicator started')
+        LOGGER.debug('SerialCommunicator started')
         while not self._stop_flag.is_set():
             # If there's messages in transmit queue
             # send them
@@ -44,4 +44,4 @@ class SerialCommunicator(Communicator):
             time.sleep(0)
 
         self.__ser.close()
-        LOGGER.info('SerialCommunicator stopped')
+        LOGGER.debug('SerialCommunicator stopped')

@@ -13,7 +13,7 @@ from ..utils import combine_hex, from_bitarray, to_hex_string, to_bitarray
 class Packet:
     """
     Base class for Packet.
-    Mainly used for for packet generation and
+    Mainly used for packet generation and
     Packet.parse_msg(buf) for parsing message.
     parse_msg() returns subclass, if one is defined for the data type.
     """

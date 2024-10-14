@@ -27,11 +27,15 @@ def from_bitarray(data: list[bool]) -> int:
     return int(''.join(['1' if x else '0' for x in data]), 2)
 
 
-def to_hex_string(data: Union[list, int]) -> str:
-    """ Convert list of integers to a hex string, separated by ":" """
+def to_hex_string(data: Union[list, int], sep: str = ':') -> str:
+    """ Convert list of integers to a hex string, separated by ":"
+
+    @param data: list of integers
+    @param sep: char that should be used as separator. Defaults to ':'
+    """
     if isinstance(data, int):
         return f'{data:02X}'
-    return ':'.join([f'{o:02X}' for o in data])
+    return sep.join([f'{o:02X}' for o in data])
 
 
 def from_hex_string(hex_string: str) -> Union[int, list]:

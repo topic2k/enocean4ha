@@ -18,7 +18,7 @@ class Communicator(threading.Thread):
     Not to be used directly, only serves as base class for SerialCommunicator etc.
     """
 
-    def __init__(self, callback: callable = None, teach_in: bool = True, loglevel=logging.NOTSET) -> None:
+    def __init__(self, callback: callable = None, teach_in: bool = False, loglevel=logging.NOTSET) -> None:
         super().__init__()
         LOGGER.setLevel(loglevel)
         # Create an event to stop the thread
@@ -32,7 +32,7 @@ class Communicator(threading.Thread):
         self.__callback = callback
         # Internal variable for the Base ID of the module.
         self._base_id = None
-        # Should new messages be learned automatically? Defaults to True.
+        # Should new messages be learned automatically? Defaults to False.
         # TODO: Not sure if we should use CO_WR_LEARNMODE??
         self.teach_in = teach_in
 
@@ -94,6 +94,13 @@ class Communicator(threading.Thread):
         # If base id is already set, return it.
         if self._base_id is not None:
             return self._base_id
+        return self._get_base_id()
+
+    def _get_base_id(self):
+        # if a callback is set, then we have to temporarly remove it, so we can catch
+        # the requested packet with the base id.
+        remeber_callbak = self.__callback
+        self.__callback = None
 
         # Send COMMON_COMMAND 0x08, CO_RD_IDBASE request to the module
         self.send(Packet(PACKET.COMMON_COMMAND, data=[COMMON_COMMAND.CO_RD_IDBASE]))
@@ -118,6 +125,10 @@ class Communicator(threading.Thread):
                 self.receive.put(packet)
             except queue.Empty:
                 continue
+
+        # if there was a callback, we have to ractivate it
+        self.__callback = remeber_callbak
+
         # Return the current Base ID (might be None).
         return self._base_id
 

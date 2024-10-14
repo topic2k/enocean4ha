@@ -5,6 +5,7 @@ from collections import OrderedDict
 from importlib.resources import files
 from typing import Union
 
+from bitarray import bitarray
 from bs4 import BeautifulSoup, Tag
 
 from .. import utils
@@ -42,20 +43,20 @@ class EEP:
         }
 
     @staticmethod
-    def _get_raw(source, bitarray) -> int:
+    def _get_raw(source, bit_array) -> int:
         """ Get raw data as integer, based on offset and size """
         offset = int(source['offset'])
         size = int(source['size'])
-        return int(''.join(['1' if digit else '0' for digit in bitarray[offset:offset + size]]), 2)
+        return int(''.join(['1' if digit else '0' for digit in bit_array[offset:offset + size]]), 2)
 
     @staticmethod
-    def _set_raw(target: Tag, raw_value: int, bitarray: list) -> list:
+    def _set_raw(target: Tag, raw_value: int, bit_array: list) -> list:
         """ put value into bit array """
         offset = int(target['offset'])
         size = int(target['size'])
         for digit in range(size):
-            bitarray[offset+digit] = (raw_value >> (size-digit-1)) & 0x01 != 0
-        return bitarray
+            bit_array[offset+digit] = (raw_value >> (size-digit-1)) & 0x01 != 0
+        return bit_array
 
     @staticmethod
     def _get_rangeitem(source: Tag, raw_value: int) -> Tag:
@@ -63,9 +64,9 @@ class EEP:
             if raw_value in range(int(rangeitem.get('start', -1)), int(rangeitem.get('end', -1)) + 1):
                 return rangeitem
 
-    def _get_value(self, source: Tag, bitarray: list) -> dict:
+    def _get_value(self, source: Tag, bit_array: list) -> dict:
         """ Get value, based on the data in XML """
-        raw_value = self._get_raw(source, bitarray)
+        raw_value = self._get_raw(source, bit_array)
 
         rng = source.find('range')
         rng_min = float(rng.find('min').text)
@@ -84,12 +85,14 @@ class EEP:
             }
         }
 
-    def _get_enum(self, source: Tag, bitarray: list) -> dict:
+    def _get_enum(self, source: Tag, bit_array: list) -> dict:
         """ Get enum value, based on the data in XML """
-        raw_value = self._get_raw(source, bitarray)
+        raw_value = self._get_raw(source, bit_array)
 
         # Find value description.
         value_desc = source.find('item', {'value': str(raw_value)}) or self._get_rangeitem(source, raw_value)
+        if not value_desc:
+            value_desc = source.find('item', {'value': hex(raw_value)})
 
         return {
             source['shortcut']: {
@@ -100,9 +103,9 @@ class EEP:
             }
         }
 
-    def _get_boolean(self, source: Tag, bitarray: list) -> dict:
+    def _get_boolean(self, source: Tag, bit_array: list) -> dict:
         """ Get boolean value, based on the data in XML """
-        raw_value = self._get_raw(source, bitarray)
+        raw_value = self._get_raw(source, bit_array)
         return {
             source['shortcut']: {
                 'description': source.get('description'),
@@ -112,8 +115,8 @@ class EEP:
             }
         }
 
-    def _set_value(self, target: Tag, value: Union[int, float], bitarray: list) -> list:
-        """ set given numeric value to target field in bitarray """
+    def _set_value(self, target: Tag, value: Union[int, float], bit_array: list) -> list:
+        """ set given numeric value to target field in bit_array """
         # derive raw value
         rng = target.find('range')
         rng_min = float(rng.find('min').text)
@@ -123,10 +126,10 @@ class EEP:
         scl_max = float(scl.find('max').text)
         raw_value = (value - scl_min) * (rng_max - rng_min) / (scl_max - scl_min) + rng_min
         # store value in bitfield
-        return self._set_raw(target, int(raw_value), bitarray)
+        return self._set_raw(target, int(raw_value), bit_array)
 
-    def _set_enum(self, target: Tag, value: Union[int, str], bitarray: list) -> list:
-        """ set given enum value (by string or integer value) to target field in bitarray """
+    def _set_enum(self, target: Tag, value: Union[int, str], bit_array: list) -> list:
+        """ set given enum value (by string or integer value) to target field in bit_array """
         # derive raw value
         if isinstance(value, int):
             # check whether this value exists
@@ -140,13 +143,13 @@ class EEP:
             if value_item is None:
                 raise ValueError(f'Enum description for value "{value}" not found in EEP.')
             raw_value = int(value_item['value'])
-        return self._set_raw(target, raw_value, bitarray)
+        return self._set_raw(target, raw_value, bit_array)
 
     @staticmethod
-    def _set_boolean(target: Tag, data: bool, bitarray: list) -> list:
-        """ set given value to target bit in bitarray """
-        bitarray[int(target['offset'])] = data
-        return bitarray
+    def _set_boolean(target: Tag, data: bool, bit_array: list) -> list:
+        """ set given value to target-bit in bit_array """
+        bit_array[int(target['offset'])] = data
+        return bit_array
 
     def find_profile(self, eep_rorg: int, rorg_func: int, rorg_type: int,
                      direction=None, command=None) -> Union[None, Tag]:
@@ -188,8 +191,8 @@ class EEP:
             return profile.find('data', recursive=False)
         return profile.find('data', {'direction': direction}, recursive=False)
 
-    def get_values(self, profile: Tag, bitarray: list, status: list) -> tuple:
-        """ Get keys and values from bitarray """
+    def get_values(self, profile: Tag, bit_array: list, status: list) -> tuple:
+        """ Get keys and values from bit_array """
         if not self.init_ok or profile is None:
             return [], {}
 
@@ -198,10 +201,10 @@ class EEP:
             if not source.name:
                 continue
             elif source.name == 'value':
-                output.update(self._get_value(source, bitarray))
+                output.update(self._get_value(source, bit_array))
             elif source.name == 'enum':
                 try:
-                    output.update(self._get_enum(source, bitarray))
+                    output.update(self._get_enum(source, bit_array))
                 except (ValueError, TypeError):
                     pass
             elif source.name == 'status':
@@ -230,3 +233,21 @@ class EEP:
             if target.name == 'status':
                 status = self._set_boolean(target, value, status)
         return data, status
+
+    def _get_masked_values(self, source, raw_value):
+        """ get possible items for raw_value """
+        # used for enum items with '0b...' values  (F6-10-00)
+        self.logger.info("_masked_value")
+        raw_value_bitarray = bitarray(f"{raw_value:b}")
+        candidates = []
+        for item in source.find_all('item'):
+            raw_mask = item.get("value", '')
+            if raw_mask and raw_mask.startswith('0b'):
+                raw_bitmask = raw_mask[2:].replace('0', '1').replace('X', '0')
+                masked_value = raw_value_bitarray[bitarray(raw_bitmask)]
+                if masked_value == bitarray(raw_mask.replace('X', '')):
+                    candidates.append(item)
+        if candidates:
+            return candidates
+
+EEPSoup =EEP()
