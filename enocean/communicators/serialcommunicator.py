@@ -13,8 +13,13 @@ LOGGER = logging.getLogger('enocean.communicators.SerialCommunicator')
 class SerialCommunicator(Communicator):
     """ Serial port communicator class for EnOcean radio """
 
-    def __init__(self, port: str = '/dev/ttyAMA0', callback: callable = None, loglevel=logging.NOTSET) -> None:
-        super().__init__(callback, loglevel=loglevel)
+    def __init__(self, port: str = '/dev/ttyAMA0', callback: callable = None, teach_in: bool = False, teach_in_callback: callable = None, loglevel=logging.NOTSET) -> None:
+        super().__init__(
+            callback=callback,
+            teach_in=teach_in,
+            teach_in_callback=teach_in_callback,
+            loglevel=loglevel
+        )
         LOGGER.setLevel(loglevel)
         # Initialize serial port
         self.__ser = serial.Serial(port, 57600, timeout=0.1)

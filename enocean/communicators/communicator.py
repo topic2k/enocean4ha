@@ -18,7 +18,7 @@ class Communicator(threading.Thread):
     Not to be used directly, only serves as base class for SerialCommunicator etc.
     """
 
-    def __init__(self, callback: callable = None, teach_in: bool = False, loglevel=logging.NOTSET) -> None:
+    def __init__(self, callback: callable = None, teach_in: bool = False, teach_in_callback: callable = None, loglevel=logging.NOTSET) -> None:
         super().__init__()
         LOGGER.setLevel(loglevel)
         # Create an event to stop the thread
@@ -35,6 +35,7 @@ class Communicator(threading.Thread):
         # Should new messages be learned automatically? Defaults to False.
         # TODO: Not sure if we should use CO_WR_LEARNMODE??
         self.teach_in = teach_in
+        self.__teach_in_callback = teach_in_callback
 
     def _get_from_send_queue(self) -> Union[Packet, None]:
         """ Get message from send queue, if one exists """
@@ -70,9 +71,12 @@ class Communicator(threading.Thread):
                 packet.received = datetime.datetime.now()
 
                 if isinstance(packet, UTETeachInPacket) and self.teach_in:
-                    response_packet = packet.create_response_packet(self.base_id)
-                    LOGGER.info('Sending response to UTE teach-in.')
-                    self.send(response_packet)
+                    if self.__teach_in_callback:
+                        self.__teach_in_callback(packet)
+                    else:
+                        response_packet = packet.create_response_packet(self.base_id)
+                        LOGGER.info('Sending response to UTE teach-in.')
+                        self.send(response_packet)
 
                 LOGGER.debug(f"received: {packet}")
                 if self.__callback is None:
